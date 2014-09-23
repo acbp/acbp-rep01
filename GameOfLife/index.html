@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Jogo da Diva</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <style>
+            *{
+                
+                background-color: black;  
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                color: gray;
+            }
+            .vivo { background-color: greenyellow;  border: 1px solid greenyellow; }
+            .morto { background-color: maroon;  border: 1px solid greenyellow; }
+            .grid { width:100px; height:100px;  border: 1px solid greenyellow; }
+            .on { width:100px; height:100px;  border: 1px solid greenyellow; background-color:blue;}
+            .off { width:100px; height:100px;  border: 1px solid greenyellow; background-color:dimgray; }
+            
+        </style>
+            
+    </head>
+    <body>
+        
+<!--        <form style="position:relative;">
+            Linhas:<input type="number" id="l" value="31">
+            Colunas:<input type="number" id="c" value="31">
+            <button  onclick='criarDivGrid( document.getElementById("l").value ,  document.getElementById("c").value ) '>Gerar grade!</button></form> 
+        -->
+        <div id='grade' style='position:absolute;'></div>
+        <script src="conway.js"></script>
+    </body>
+</html>
