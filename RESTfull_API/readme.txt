@@ -1,0 +1,1 @@
+è necessario ter instalado npm, nodejs e mongodb
