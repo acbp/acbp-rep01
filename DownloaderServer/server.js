@@ -8,9 +8,9 @@ var bodyParser = require("body-parser");
 var url = require('url');
 var fs = require('fs');
 var http = require('http');
+var https = require('https');
 
-
-var port = process.env.PORT || 8080; //configura porta
+var port = process.env.PORT || 666; //configura porta
 
 
 //Permite usar o bodyParser 
@@ -25,14 +25,15 @@ app.use(bodyParser.json());
 SLAVE
 */
 
-var dir= './downloads/',
+var dir= '../../../downloads/FromBot/',
     working = false;
 var arr;
 var file;
+dir='./Download/';
 
 var call = function (response) {
 
-    console.log('Downloading...');
+    console.log('Downloading...' );
 
     response.on('data', function (data) {
         file.write(data);
@@ -42,7 +43,7 @@ var call = function (response) {
 
             working = false;
 
-            console.log('Ok...Got this ! ');
+            console.log('Ok...Got this ! '+ Date.now());
 
             if (arr) {
                 arr.shift();
@@ -52,33 +53,40 @@ var call = function (response) {
                     while( arr[0] ==="" )
                         arr.shift();
 
-                    console.log('proximo!')
+                    console.log('proximo! '+ Date.now())
 
                     file = fs.createWriteStream( dir+arr[0].substr(arr[0].lastIndexOf('/') + 1, arr[0].length));
 
                     get(arr[0]);
+//                    console.log("ok2");
                 }
+  //              console.log("ok1");
             }
+    //        console.log("ok0");
         });
-
+	//console.log("ok");
 }
 
 var get = function (url) {
 
-    var name = url.substr(url.lastIndexOf('/') + 1, url.length);
+    name = url.substr(url.lastIndexOf('/') + 1, url.length);
 
     fs.exists(name, function (err, existe) {
 
         working = true;
+		console.log(1,err,'\n',existe);
 
-        if (err )
-            working=true;
+        if ( err )
+            working=false;
 
-
-        file = fs.createWriteStream( dir+url.substr(url.lastIndexOf('/') + 1, url.length));
-
-        http.get(url, call);
-
+        //else
+            file = fs.createWriteStream( dir+url.substr(url.lastIndexOf('/') + 1, url.length));
+	
+	if( url.match("https") )
+		https.get(url, call);
+	else
+        	http.get(url, call);
+        //console.log("ok ",dir+url.substr(url.lastIndexOf('/') + 1, url.length));
     });
 };
 
@@ -95,27 +103,26 @@ var rota = express.Router(); // pega instância
 // middleware para usada para todas as rotas
 rota.use(function (req, rsp, nxt) {
     var fail = true;
-    var add = req.url.indexOf('add') < 0,
-        download = req.url.indexOf('download') < 0;
+    var add = req.url.indexOf('add') < 0;
 
-    if ( add )
-        return rsp.json('Nope!');
+    if ( req.url.length - req.url.indexOf('add') <5 )
+        return rsp.json('Nope!' + Date.now() );
+		
+    console.log('add');
 
-        console.log('add');
+    if (!arr)
+        arr = []
 
-        if (!arr)
-            arr = []
+    url = req.url.substr(5, req.url.length);
 
-        url = req.url.substr(5, req.url.length);
-
-        arr = arr.concat(url.split('%E2%98%BA'));
+    arr = arr.concat(url.split('!!!'));
 
 
-        if (!working)
-            get(arr[0]);
-    
-        rsp.json('Ok!');
+    if (!working)
+        get(arr[0]);
 
+    rsp.json('Ok! on '+ Date.now() );
+    console.log('ok');
 
 });
 
