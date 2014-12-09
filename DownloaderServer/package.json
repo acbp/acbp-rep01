@@ -6,7 +6,6 @@
         "fs": "*",
         "body-parser": "*",
         "url":"*",
-        "http":"*",
-        "https":"*"
+        "http":"*"
 	}
 }
