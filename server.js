@@ -74,7 +74,7 @@ var get = function (url) {
     fs.exists(name, function (err, existe) {
 
         working = true;
-		console.log(1,err,'\n',existe);
+		console.log('\n--------------------\nNome do Arquivo:\n',name,'\nURL:\n',existe,'--------------------\n');
 
         if ( err )
             working=false;
@@ -85,7 +85,7 @@ var get = function (url) {
 	if( url.match("https") )
 		https.get(url, call);
 	else
-        	http.get(url, call);
+        http.get(url, call);
         //console.log("ok ",dir+url.substr(url.lastIndexOf('/') + 1, url.length));
     });
 };
@@ -106,7 +106,7 @@ rota.use(function (req, rsp, nxt) {
     var add = req.url.indexOf('add') < 0;
 
     if ( req.url.length - req.url.indexOf('add') <5 )
-        return rsp.json('Nope!' + Date.now() );
+        return rsp.json('Falhou !!' + Date.now() );
 		
     console.log('add');
 
@@ -116,7 +116,6 @@ rota.use(function (req, rsp, nxt) {
     url = req.url.substr(5, req.url.length);
 
     arr = arr.concat(url.split('!!!'));
-
 
     if (!working)
         get(arr[0]);
