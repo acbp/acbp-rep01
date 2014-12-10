@@ -1,0 +1,11 @@
+{
+  "name": "download-manager",
+  "main": "server.js",
+  "dependencies": {
+  "express": "*",
+  "fs": "*",
+  "body-parser": "*",
+  "url":"*",
+  "http":"*"
+  }
+}
